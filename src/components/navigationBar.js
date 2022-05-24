@@ -1,57 +1,50 @@
-import React from 'react';
-import {
-  CDBSidebar,
-  CDBSidebarContent,
-  CDBSidebarFooter,
-  CDBSidebarHeader,
-  CDBSidebarMenu,
-  CDBSidebarMenuItem,
-} from 'cdbreact';
-import { NavLink } from 'react-router-dom';
+import logo from '../assets/logo.png'
+import { BiUserPlus,BiUserX,BiUser,BiHome } from "react-icons/bi";
+import {Link} from 'react-router-dom'
 
-const NavigationBar = () => {
+
+const Navbar = () => {
+
   return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
-      <CDBSidebar textColor="#fff" backgroundColor="#333">
-        <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
-          <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
-            Sidebar
-          </a>
-        </CDBSidebarHeader>
 
-        <CDBSidebarContent className="sidebar-content">
-          <CDBSidebarMenu>
-            <NavLink exact to="/" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="columns">Dashboard</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/login" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="table">Tables</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/profile" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="user">Profile page</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/analytics" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="chart-line">Analytics</CDBSidebarMenuItem>
-            </NavLink>
-
-            <NavLink exact to="/hero404" target="_blank" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="exclamation-circle">404 page</CDBSidebarMenuItem>
-            </NavLink>
-          </CDBSidebarMenu>
-        </CDBSidebarContent>
-
-        <CDBSidebarFooter style={{ textAlign: 'center' }}>
-          <div
-            style={{
-              padding: '20px 5px',
-            }}
-          >
-            Sidebar Footer
+    <div className='flex'>
+      <div className={` w-72 bg-blue-700 h-screen relative duration-300 drop-shadow-lg`}>
+          <div className="flex gap-x-4 items-center mt-0">
+            <img
+              src={logo}
+              className={`w-fit h-18`}
+            />
           </div>
-        </CDBSidebarFooter>
-      </CDBSidebar>
+          
+          <Link to="/" className={`flex mt-3 h-3 p-8 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 no-underline`}>
+              <BiHome size='2rem'/>
+              <span className={`origin-left`}>
+                  Home
+              </span>
+          </Link>
+          <Link to="/createTeacher" className={`flex mt-3 h-3 p-8 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 no-underline`}>
+              <BiUserPlus size='2rem'/>
+              <span className={`origin-left`}>
+                  Alta profesor
+              </span>
+          </Link>
+          <Link to="/editTeacher" className={`flex mt-3 h-3 p-8 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 no-underline`}>
+              <BiUser size='2rem'/>
+              <span className={`origin-left`}>
+                Editar profesor
+              </span>
+          </Link>
+          <Link to="/deleteTeacher" className={`flex mt-3 h-3 p-8 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 no-underline`}>
+              <BiUserX size='2rem'/>
+              <span className={`origin-left`}>
+                Baja profesor
+              </span>
+          </Link>
+      </div>
+      
     </div>
-  );
-};
+    
+  )
+}
 
-export default NavigationBar;
+export default Navbar

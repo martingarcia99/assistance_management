@@ -40,3 +40,12 @@
     transform: rotate(360deg);
   }
 }
+
+$light: #ffffff;
+$gray: #c4ccde;
+
+.navbar {
+  background-color: $light;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid $gray;
+}
