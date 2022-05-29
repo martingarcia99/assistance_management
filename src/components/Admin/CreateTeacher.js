@@ -45,11 +45,11 @@ const CreateTeacher = () => {
     return (
         <div className="flex m-36 mt-36 ml-96 shadow-2xl">
             <Form className="items-center justify-center ml-20 p-32 h-48 mr-20">
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Group className="mb-3">
                     <Form.Label>Nombre</Form.Label>
                     <Form.Control type="text" onChange={(event) => {setNombre(event.target.value)}}/>
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Group className="mb-3">
                     <Form.Label>Correo electrónico</Form.Label>
                     <Form.Control type="email" onChange={(event) => {setEmail(event.target.value)}}/>
                     <Form.Text className="text-muted">

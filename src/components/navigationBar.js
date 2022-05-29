@@ -1,5 +1,5 @@
 import logo from '../assets/logo.png'
-import { BiUserPlus,BiUserX,BiUser,BiHome } from "react-icons/bi";
+import { BiUserPlus,BiHome } from "react-icons/bi";
 import {Link} from 'react-router-dom'
 
 
@@ -26,18 +26,6 @@ const Navbar = () => {
               <BiUserPlus size='2rem'/>
               <span className={`origin-left`}>
                   Alta profesor
-              </span>
-          </Link>
-          <Link to="/editTeacher" className={`flex mt-3 h-3 p-8 cursor-pointer hover:bg-slate-200 text-gray-50 text-sm items-center gap-x-4 no-underline`}>
-              <BiUser size='2rem'/>
-              <span className={`origin-left`}>
-                Editar profesor
-              </span>
-          </Link>
-          <Link to="/deleteTeacher" className={`flex mt-3 h-3 p-8 cursor-pointer hover:bg-slate-200 text-gray-50 text-sm items-center gap-x-4 no-underline`}>
-              <BiUserX size='2rem'/>
-              <span className={`origin-left`}>
-                Baja profesor
               </span>
           </Link>
       </div>
