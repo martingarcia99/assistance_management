@@ -23,16 +23,16 @@ const Navbar = () => {
             />
           </div>
           
-          <Link to="/" className={`flex mt-3 h-3 p-8 cursor-pointer hover:bg-slate-200 text-gray-50 text-sm items-center gap-x-4 no-underline`}>
+          <Link to="/HomeTeacher" className={`flex mt-3 h-3 p-8 cursor-pointer hover:bg-slate-200 text-gray-50 text-sm items-center gap-x-4 no-underline`}>
               <BiHome size='2rem'/>
               <span className={`origin-left`}>
                   Inicio
               </span>
           </Link>
-          <Link to="/createTeacher" className={`flex mt-3 h-3 p-8 cursor-pointer hover:bg-slate-200 text-gray-50 text-sm items-center gap-x-4 no-underline`}>
+          <Link to="/createSubject" className={`flex mt-3 h-3 p-8 cursor-pointer hover:bg-slate-200 text-gray-50 text-sm items-center gap-x-4 no-underline`}>
               <BiUserPlus size='2rem'/>
               <span className={`origin-left`}>
-                  Alta profesor
+                  Alta Asignatura
               </span>
           </Link>
           <button onClick={handleLogout} className={`flex w-full mt-3 h-3 bottom-0 absolute p-8 cursor-pointer hover:bg-slate-200 text-gray-50 text-sm hover:text-blue-700 items-center gap-x-4 no-underline`}>

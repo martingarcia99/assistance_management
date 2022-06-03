@@ -7,17 +7,19 @@ import {collection, addDoc,where,query,getDocs} from 'firebase/firestore'
 import {useNavigate} from 'react-router-dom'
 import { useAuth } from '../../context/authContext'
 import { auth } from '../../firebase-config'
-import {sendEmailVerification,sendPasswordResetEmail} from 'firebase/auth'
 
-const CreateTeacher = () => {
+const CreateSubject = () => {
 
     const [email, setEmail] = useState('')
     const [nombre, setNombre] = useState('')
     const [error, setError] = useState('')
-    const teacherCollectionRef = collection(db,"teachers")
+    const subjectsCollectionRef = collection(db,"subjects")
     const navigate = useNavigate()
 
-    const {signup} = useAuth()
+    const {user} = useAuth()
+    const [teacher, setTeacher] = useState('')
+
+    setTeacher(user.email)
 
     const generateP = async () => {
         var pass = '';
@@ -35,7 +37,7 @@ const CreateTeacher = () => {
 
     const createTeacher = async () => {
         
-        const q = query(teacherCollectionRef, where("correo", "==", email))
+        const q = query(subjectsCollectionRef, where("nombre", "==", nombre))
         
         const querySnapshot = await getDocs(q)
 
@@ -43,10 +45,9 @@ const CreateTeacher = () => {
 
         if(querySnapshot.empty) {
             try{
-                await signup(email,contraseña)
-                await addDoc(teacherCollectionRef,{nombre:nombre,apellidos:null,departamento:null,correo:email,contraseña:contraseña,asignaturas:[]})
+                await addDoc(subjectsCollectionRef,{nombre:nombre,descripcion:desc,curso:curso,profesor:teacher,alumnoslist:[]})
                 //await sendPasswordResetEmail(auth.currentUser)
-                navigate('/')
+                navigate('/HomeTeacher')
             }catch(error){
                 if(error.code === "auth/invalid-email"){
                     setError("Correo invalido")
@@ -80,4 +81,4 @@ const CreateTeacher = () => {
     )
 }
 
-export default CreateTeacher;
+export default CreateSubject;

@@ -15,7 +15,7 @@ const HomeAdmin = () => {
     const deleteTeacher = async(id) => {
         const teacherDoc = doc(db,"teachers",id)
         await deleteDoc(teacherDoc)
-        window.location.reload()
+        window.location.href=window.location.href
     }
 
     const editTeacher = async (id) => {

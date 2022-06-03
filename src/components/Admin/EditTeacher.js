@@ -29,7 +29,7 @@ const EditTeacher = () => {
         const querySnapshot = await getDocs(q)
 
         if(querySnapshot.empty) {   
-            if(newEmail == ""){
+            if(newEmail === ""){
                 newFields = {correo:email,nombre:nombre,apellidos:apellidos,departamento:departamento,contraseña:password}  
             }else{
                 newFields = {correo:newEmail,nombre:nombre,apellidos:apellidos,departamento:departamento,contraseña:password}  
