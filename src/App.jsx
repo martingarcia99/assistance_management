@@ -7,6 +7,9 @@ import CreateTeacher from './components/Admin/CreateTeacher';
 import EditTeacher from './components/Admin/EditTeacher';
 import HomeTeacher from './components/Teacher/HomeTeacher';
 import CreateSubject from './components/Teacher/CreateSubject';
+import ShowSubject from './components/Teacher/ShowSubject';
+import EditSubject from './components/Teacher/CreateSubject';
+import CreateSchedule from './components/Teacher/CreateSchedule';
 import SidebarLayout from './components/sidebarLayout';
 import SidebarLayoutTeacher from './components/sidebarLayoutTeacher';
 import { ProtectedRoute } from './components/ProtectedRoute'
@@ -19,16 +22,19 @@ function App() {
       <div className='flex'>
       <AuthProvider>
         <Routes>
+          <Route path='/' index exact={true} element={<Login />}/>
           <Route element={<ProtectedRoute><SidebarLayout/></ProtectedRoute>}>
-            <Route path='/' element={<ProtectedRoute><HomeAdmin /></ProtectedRoute>}/>
+            <Route path='/HomeAdmin' element={<ProtectedRoute><HomeAdmin /></ProtectedRoute>}/>
             <Route path='/createTeacher' element={<ProtectedRoute><CreateTeacher /></ProtectedRoute>}/>
             <Route path='/editTeacher/:id' element={<ProtectedRoute><EditTeacher /></ProtectedRoute>}/>
           </Route>
           <Route element={<ProtectedRouteTeacher><SidebarLayoutTeacher/></ProtectedRouteTeacher>}>
             <Route path='/HomeTeacher' element={<ProtectedRouteTeacher><HomeTeacher /></ProtectedRouteTeacher>}/>
-            <Route path='/createSubject' element={<ProtectedRouteTeacher><CreateSubject/></ProtectedRouteTeacher>}/>
+            <Route path='/createSubject' element={<ProtectedRouteTeacher><CreateSubject /></ProtectedRouteTeacher>}/>
+            <Route path='/showSubject' element={<ProtectedRouteTeacher><ShowSubject /></ProtectedRouteTeacher>}/>
+            <Route path='/editSubject/:id' element={<ProtectedRouteTeacher><EditSubject /></ProtectedRouteTeacher>}/>
+            <Route path='/createSchedule/:id' element={<ProtectedRouteTeacher><CreateSchedule /></ProtectedRouteTeacher>}/>
           </Route>
-          <Route path='/login' exact={true} element={<Login />}/>
         </Routes>
       </AuthProvider>
       </div>

@@ -13,7 +13,10 @@ const CreateTeacher = () => {
 
     const [email, setEmail] = useState('')
     const [nombre, setNombre] = useState('')
+    const [apellidos, setApellidos] = useState('')
+    const [departamento, setDepartamento] = useState('')
     const [error, setError] = useState('')
+    const [uni, setUni] = useState('')
     const teacherCollectionRef = collection(db,"teachers")
     const navigate = useNavigate()
 
@@ -44,7 +47,7 @@ const CreateTeacher = () => {
         if(querySnapshot.empty) {
             try{
                 await signup(email,contraseña)
-                await addDoc(teacherCollectionRef,{nombre:nombre,apellidos:null,departamento:null,correo:email,contraseña:contraseña,asignaturas:[]})
+                await addDoc(teacherCollectionRef,{nombre:nombre,apellidos:apellidos,departamento:departamento,universidad:uni,correo:email,contraseña:contraseña})
                 //await sendPasswordResetEmail(auth.currentUser)
                 navigate('/')
             }catch(error){
@@ -63,6 +66,18 @@ const CreateTeacher = () => {
                 <Form.Group className="mb-3">
                     <Form.Label>Nombre</Form.Label>
                     <Form.Control type="text" onChange={(event) => {setNombre(event.target.value)}}/>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>Apellidos</Form.Label>
+                    <Form.Control type="text" onChange={(event) => {setApellidos(event.target.value)}}/>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>Universidad</Form.Label>
+                    <Form.Control type="text" onChange={(event) => {setUni(event.target.value)}}/>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>Departamento</Form.Label>
+                    <Form.Control type="text" onChange={(event) => {setDepartamento(event.target.value)}}/>
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Correo electrónico</Form.Label>

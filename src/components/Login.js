@@ -21,7 +21,7 @@ const Login = () => {
             await login(email,password)
             console.log(email)
             if( email === 'admin@gmail.com')
-                navigate('/')
+                navigate('/HomeAdmin')
             else    
                 navigate('/HomeTeacher')
         }catch(error){

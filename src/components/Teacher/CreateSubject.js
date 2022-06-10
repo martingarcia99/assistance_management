@@ -1,51 +1,38 @@
 import React from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import {db} from '../../firebase-config'
 import {collection, addDoc,where,query,getDocs} from 'firebase/firestore'
 import {useNavigate} from 'react-router-dom'
 import { useAuth } from '../../context/authContext'
-import { auth } from '../../firebase-config'
 
 const CreateSubject = () => {
 
-    const [email, setEmail] = useState('')
     const [nombre, setNombre] = useState('')
     const [error, setError] = useState('')
+    const [desc, setDesc] = useState('')
+    const [horario, setHorario] = useState('')
     const subjectsCollectionRef = collection(db,"subjects")
     const navigate = useNavigate()
 
     const {user} = useAuth()
     const [teacher, setTeacher] = useState('')
+    const [curso, setCurso] = useState('')
 
-    setTeacher(user.email)
+    useEffect(() => {
+        setTeacher(user.email)
+    },[])
 
-    const generateP = async () => {
-        var pass = '';
-        var str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' + 
-                'abcdefghijklmnopqrstuvwxyz0123456789@#$';
-          
-        for (var i = 1; i <= 8; i++) {
-            var char = Math.floor(Math.random() * str.length + 1);
-              
-            pass += str.charAt(char)
-        }
-          
-        return pass
-    }
-
-    const createTeacher = async () => {
+    const createSubject = async () => {
         
         const q = query(subjectsCollectionRef, where("nombre", "==", nombre))
         
         const querySnapshot = await getDocs(q)
 
-        var contraseña = await generateP()
-
         if(querySnapshot.empty) {
             try{
-                await addDoc(subjectsCollectionRef,{nombre:nombre,descripcion:desc,curso:curso,profesor:teacher,alumnoslist:[]})
+                await addDoc(subjectsCollectionRef,{nombre:nombre,descripcion:desc,curso:curso,profesor:teacher,horario:""})
                 //await sendPasswordResetEmail(auth.currentUser)
                 navigate('/HomeTeacher')
             }catch(error){
@@ -54,7 +41,7 @@ const CreateSubject = () => {
                 }
             }
         }else
-            setError("correo en uso")
+            setError("la asignatura ya existe")
         
     }
 
@@ -64,17 +51,21 @@ const CreateSubject = () => {
                 <Form.Group className="mb-3">
                     <Form.Label>Nombre</Form.Label>
                     <Form.Control type="text" onChange={(event) => {setNombre(event.target.value)}}/>
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Form.Label>Correo electrónico</Form.Label>
-                    <Form.Control type="email" onChange={(event) => {setEmail(event.target.value)}}/>
                     <Form.Text className="text-muted">
                         {error}
                     </Form.Text>
                 </Form.Group>
+                <Form.Group className="mb-3 w-96">
+                    <Form.Label>Descripcion</Form.Label>
+                    <Form.Control as="textarea" rows={4} onChange={(event) => {setDesc(event.target.value)}}/>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>Curso</Form.Label>
+                    <Form.Control type="text" onChange={(event) => {setCurso(event.target.value)}}/>
+                </Form.Group>
                 
-                <Button className="text-center items-center justify-center" onClick={() => {createTeacher()}}>
-                    Crear Profesor
+                <Button className="text-center items-center justify-center center ml-32" onClick={() => {createSubject()}}>
+                    Crear Asignatura
                 </Button>
             </Form>
         </div>

@@ -33,7 +33,6 @@ const HomeAdmin = () => {
             const data = await getDocs(teacherCollectionRef)
             setTeachers(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
         }
-
         getTeachers()
     },[])
 

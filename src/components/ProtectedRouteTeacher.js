@@ -4,11 +4,9 @@ import {Navigate} from 'react-router-dom'
 export function ProtectedRouteTeacher({children}) {
     const {user,loading} = useAuth()
 
-    console.log(user)
-
     if(loading) return null
 
-    if(!user) return <Navigate to='/login' />
+    if(!user) return <Navigate to='/' />
 
     return <>{children}</>
 }

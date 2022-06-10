@@ -12,6 +12,7 @@ const EditTeacher = () => {
     const [email, setEmail] = useState('')
     const [newEmail, setNewEmail] = useState('')
     const [nombre, setNombre] = useState('')
+    const [uni, setUni] = useState('')
     const [apellidos, setApellidos] = useState('')
     const [departamento, setDepartamento] = useState('')
     const [password, setPassword] = useState('')
@@ -22,7 +23,7 @@ const EditTeacher = () => {
 
     const editTeacher = async () => {
 
-        const teacher = doc(db, "teachers", id)
+        const teacher = doc(db, "subjects", id)
 
         const q = query(teacherCollectionRef, where("correo", "==", newEmail))
         
@@ -30,9 +31,9 @@ const EditTeacher = () => {
 
         if(querySnapshot.empty) {   
             if(newEmail === ""){
-                newFields = {correo:email,nombre:nombre,apellidos:apellidos,departamento:departamento,contraseña:password}  
+                newFields = {correo:email,nombre:nombre,apellidos:apellidos,departamento:departamento,universidad:uni,contraseña:password}  
             }else{
-                newFields = {correo:newEmail,nombre:nombre,apellidos:apellidos,departamento:departamento,contraseña:password}  
+                newFields = {correo:newEmail,nombre:nombre,apellidos:apellidos,departamento:departamento,universidad:uni,contraseña:password}  
             }   
             await updateDoc(teacher,newFields)
             navigate('/')
@@ -52,6 +53,7 @@ const EditTeacher = () => {
             setNombre(docTeacher.data().nombre)
             setApellidos(docTeacher.data().apellidos)
             setDepartamento(docTeacher.data().departamento)
+            setUni(docTeacher.data().universidad)
             setPassword(docTeacher.data().contraseña)
     
         }
@@ -72,8 +74,12 @@ const EditTeacher = () => {
                     </Form.Group>
                 </div>
                 <Form.Group className="mb-3">
+                    <Form.Label>Universidad</Form.Label>
+                    <Form.Control type="text" value={uni} onChange={(event) => {setUni(event.target.value)}}/>
+                </Form.Group>
+                <Form.Group className="mb-3">
                     <Form.Label>Departamento</Form.Label>
-                    <Form.Control type="text" value={departamento}onChange={(event) => {setDepartamento(event.target.value)}}/>
+                    <Form.Control type="text" value={departamento} onChange={(event) => {setDepartamento(event.target.value)}}/>
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Correo electrónico</Form.Label>

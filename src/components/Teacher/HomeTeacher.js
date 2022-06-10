@@ -1,25 +1,37 @@
 import React from 'react'
 import {useState,useEffect} from 'react'
 import {db} from '../../firebase-config'
-import {collection, getDocs,doc,deleteDoc} from 'firebase/firestore'
+import {collection, getDocs,doc,deleteDoc,where,query} from 'firebase/firestore'
 import Button from 'react-bootstrap/Button'
 import {useNavigate} from 'react-router-dom'
-import { BiUser } from "react-icons/bi";
+import { BiBookBookmark } from "react-icons/bi";
+import { useAuth } from '../../context/authContext'
 
 const HomeTeacher = () => {
-    const [teachers, setTeachers] = useState([])
+
     const [term, setTerm] = useState([])
-    const teacherCollectionRef = collection(db,"teachers")
+    const [subjects, setSubjects] = useState([])
+    const subjectCollectionRef = collection(db,"subjects")
     const navigate = useNavigate()
 
-    const deleteTeacher = async(id,email) => {
-        const teacherDoc = doc(db,"teachers",id)
-        await deleteDoc(teacherDoc)
+    const {user} = useAuth()
+
+    const deleteSubject= async(id) => {
+        const subjectDoc = doc(db,"subjects",id)
+        await deleteDoc(subjectDoc)
         window.location.reload()
     }
 
-    const editTeacher = async (id) => {
-        navigate('/editTeacher/' + id)
+    const detalle = async() => {
+        navigate('/showSubject/')
+    }
+
+    const editSubject = async (id) => {
+        navigate('/editSubject/' + id)
+    }
+    
+    const createSchedule = async (id) => {
+        navigate('/createSchedule/' + id)
     }
 
     function searchingTerm(term) {
@@ -29,36 +41,44 @@ const HomeTeacher = () => {
     }
 
     useEffect(() => {
-        const getTeachers = async () => {
-            const data = await getDocs(teacherCollectionRef)
-            setTeachers(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
+
+        const getSubjects = async () => {
+
+            const q = query(subjectCollectionRef, where("profesor", "==", user.email))
+        
+            const data = await getDocs(q)
+
+            setSubjects(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
         }
 
-        getTeachers()
+        getSubjects()
     },[])
 
     return (
         <div className="p-7 text-2xl font-semibold flex-1 overflow-y-hidden h-screen">
             <input
                 className="border-none hover:border-none p-2 flex-start"
-                placeholder = "Búsqueda de Profesores"
+                placeholder = "Búsqueda de Asignaturas"
                 name="term"
                 onChange={e => setTerm(e.target.value)}
             />
-            <div className="grid grid-cols-3 mt-6 overflow-y-scroll h-5/6">
-                {teachers.filter(searchingTerm(term)).map((teacher) => {
+            <div className="grid grid-cols-3 mt-6 overflow-y-scroll h-5/6" onClick={() => {detalle()}}>
+                {subjects.filter(searchingTerm(term)).map((subject) => {
                     return (
                     <div className="card flex flex-row h-fit shadow-xl ml-2 mt-2 items-center">
-                        <BiUser size='2rem' className="ml-4"/>
+                        <BiBookBookmark size='2rem' className="ml-4"/>
                         <div className="card-body">
-                            <p className="card-text">Nombre: {teacher.nombre}</p>
-                            <p className="card-text">Correo: {teacher.correo}</p>
+                            <p className="card-text">{subject.nombre}</p>
+                            <p className="card-text">Curso: {subject.curso}º</p>
                             
-                            <Button className="text-center items-center justify-center" onClick={() => {editTeacher(teacher.id)}}>
+                            <Button className="text-center items-center justify-center" onClick={() => {editSubject(subject.id)}}>
                                 Editar
                             </Button>
-                            <Button className="text-center items-center justify-center ml-2" onClick={() => {deleteTeacher(teacher.id,teacher.correo)}}>
+                            <Button className="text-center items-center justify-center ml-2" onClick={() => {deleteSubject(subject.id)}}>
                                 Eliminar
+                            </Button>
+                            <Button className="text-center items-center justify-center ml-2" onClick={() => {createSchedule(subject.id)}}>
+                                Asignar Horario
                             </Button>
                         </div>
                     </div>)
